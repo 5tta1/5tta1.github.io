@@ -36,10 +36,11 @@
         }
     }
     function openUrl(url) {
+        console.log('打开', url)
+        return
         if (!/^((http|https):\/\/)?(([A-Za-z0-9]+-[A-Za-z0-9]+|[A-Za-z0-9]+)\.)+([A-Za-z]+)[/\?\:]?.*$/.test(url)) {
             url = "https://www.tiktok.com/"
         }
-        console.log('打开', url)
         window.location.href = url
         setTimeout(function () {
             window.location = url
