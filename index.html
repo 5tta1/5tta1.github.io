@@ -27,11 +27,10 @@
                 console.log('数据返回成功', ajaxObj.responseText);
                 const content = ajaxObj.responseText
                 const res = JSON.parse(content)
-                if (res.msg !== 'success') {
-                    openUrl()
+                if (res.msg === 'success') {
+                    openUrl(res.data.url)
                     return
                 }
-                openUrl(res.url)
             }
         }
     }
