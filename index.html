@@ -46,11 +46,7 @@
         }, 20)
     }
     const code = getQueryVariable('code')
-    if (!code) {
-        openUrl()
-    } else {
-        openAppReq()
-    }
+    code ? openAppReq() : openUrl()
 </script>
 <body>
 </body>
