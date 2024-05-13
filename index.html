@@ -1,12 +1,57 @@
 <!DOCTYPE html>
-<html lang="en" class="demo-4">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-    <title></title>
+    <title>5TT短链接</title>
 </head>
+<script type="text/javascript">
+    function getQueryVariable(variable) {
+        var query = window.location.search.substring(1);
+        var vars = query.split('&');
+        for (var i = 0; i < vars.length; i++) {
+            var pair = vars[i].split('=');
+            if (pair[0] === variable) {
+                return pair[1];
+            }
+        }
+        return null
+    }
+    function openAppReq() {
+        const ajaxObj = new XMLHttpRequest();
+        ajaxObj.open('get', 'https://api.5tt.org/tiktok/short/?code=' + code + '&ref=' + encodeURIComponent(document.referrer));
+        ajaxObj.send();
+        ajaxObj.onreadystatechange = function () {
+            if (ajaxObj.readyState === 4 && ajaxObj.status === 200) {
+                console.log('数据返回成功', ajaxObj.responseText);
+                const content = ajaxObj.responseText
+                const res = JSON.parse(content)
+                if (res.msg !== 'success') {
+                    openUrl()
+                    return
+                }
+                openUrl(res.url)
+            }
+        }
+    }
+    function openUrl(url) {
+        if (!/^((http|https):\/\/)?(([A-Za-z0-9]+-[A-Za-z0-9]+|[A-Za-z0-9]+)\.)+([A-Za-z]+)[/\?\:]?.*$/.test(url)) {
+            url = "https://www.tiktok.com/"
+        }
+        console.log('打开', url)
+        window.location.href = url
+        setTimeout(function () {
+            window.location = url
+        }, 20)
+    }
+    const code = getQueryVariable('code')
+    if (!code) {
+        openUrl()
+    } else {
+        openAppReq()
+    }
+</script>
 <body>
-    <script>window.location="https://wa.me/447594814959";</script>
 </body>
 </html>
